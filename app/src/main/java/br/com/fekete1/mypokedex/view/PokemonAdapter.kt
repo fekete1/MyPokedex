@@ -12,19 +12,33 @@ import br.com.fekete1.mypokedex.R
 import br.com.fekete1.mypokedex.domain.Pokemon
 import com.bumptech.glide.Glide
 
-class PokemonAdapter : ListAdapter<Pokemon, PokemonAdapter.ViewHolder>(PokemonDiffCallback()) {
+private const val VIEW_TYPE_POKEMON = 0
+private const val VIEW_TYPE_LOADING = 1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.pokemon_item, parent, false)
-        return ViewHolder(view)
+class PokemonAdapter : ListAdapter<Pokemon?, RecyclerView.ViewHolder>(PokemonDiffCallback()) {
+
+    override fun getItemViewType(position: Int): Int {
+        return if (getItem(position) == null) VIEW_TYPE_LOADING else VIEW_TYPE_POKEMON
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bindView(item)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == VIEW_TYPE_POKEMON) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.pokemon_item, parent, false)
+            PokemonViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_loading, parent, false)
+            LoadingViewHolder(view)
+        }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is PokemonViewHolder) {
+            val item = getItem(position)
+            holder.bindView(item)
+        }
+    }
+
+    class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindView(item: Pokemon?) = with(itemView) {
             val ivPokemon = findViewById<ImageView>(R.id.ivPokemon)
             val tvNumber = findViewById<TextView>(R.id.tvNumber)
@@ -49,7 +63,9 @@ class PokemonAdapter : ListAdapter<Pokemon, PokemonAdapter.ViewHolder>(PokemonDi
         }
     }
 
-    class PokemonDiffCallback : DiffUtil.ItemCallback<Pokemon>() {
+    class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    class PokemonDiffCallback : DiffUtil.ItemCallback<Pokemon?>() {
         override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
             return oldItem.number == newItem.number
         }
@@ -57,5 +73,6 @@ class PokemonAdapter : ListAdapter<Pokemon, PokemonAdapter.ViewHolder>(PokemonDi
         override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
             return oldItem == newItem
         }
+
     }
 }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 
 class PokemonViewModel : ViewModel() {
     val pokemons = MutableLiveData<List<Pokemon?>>()
+    val isLoadingInitial = MutableLiveData<Boolean>()
     private var offset = 0
     private val limit = 20
     var isLoading = false  // Flag para verificar se está carregando
@@ -25,7 +26,11 @@ class PokemonViewModel : ViewModel() {
         if (isLoading) return  // Não faça nada se já estiver carregando
 
         isLoading = true
-        pokemons.value = pokemons.value.orEmpty() + listOf(null) // Adiciona item de loading
+        if (offset == 0) {
+            isLoadingInitial.postValue(true)
+        } else {
+            pokemons.value = pokemons.value.orEmpty() + listOf(null) // Adiciona item de loading
+        }
 
         viewModelScope.launch {
             try {
@@ -62,6 +67,7 @@ class PokemonViewModel : ViewModel() {
                 Log.e("PokemonViewModel", "Exception fetching pokemon", e)
             } finally {
                 isLoading = false
+                isLoadingInitial.postValue(false)
             }
         }
     }

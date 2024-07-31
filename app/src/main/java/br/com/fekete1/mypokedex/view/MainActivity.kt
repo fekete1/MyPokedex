@@ -1,15 +1,14 @@
 package br.com.fekete1.mypokedex.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fekete1.mypokedex.R
-import br.com.fekete1.mypokedex.domain.Pokemon
 import br.com.fekete1.mypokedex.viewmodel.PokemonViewModel
-
 import br.com.fekete1.mypokedex.viewmodel.PokemonViewModelFactory
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: PokemonAdapter
     private lateinit var viewModel: PokemonViewModel
+    private lateinit var progressBar: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
         adapter = PokemonAdapter()
         recyclerView.adapter = adapter
 
+        // Configurar a ProgressBar
+        progressBar = findViewById(R.id.loadingProgress)
+
         // Configurar o ViewModel
         viewModel = ViewModelProvider(this, PokemonViewModelFactory())
             .get(PokemonViewModel::class.java)
@@ -35,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         // Observar os dados dos Pokémon
         viewModel.pokemons.observe(this, Observer { pokemons ->
             adapter.submitList(pokemons)
+        })
+
+        // Observar o estado de carregamento inicial
+        viewModel.isLoadingInitial.observe(this, Observer { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         })
 
         // Adicionar o ScrollListener para carregar mais dados
