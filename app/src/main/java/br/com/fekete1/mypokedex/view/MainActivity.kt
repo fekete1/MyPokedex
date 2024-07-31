@@ -1,6 +1,5 @@
 package br.com.fekete1.mypokedex.view
 
-import PokemonViewModel
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -9,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fekete1.mypokedex.R
 import br.com.fekete1.mypokedex.domain.Pokemon
+import br.com.fekete1.mypokedex.viewmodel.PokemonViewModel
 
 import br.com.fekete1.mypokedex.viewmodel.PokemonViewModelFactory
 

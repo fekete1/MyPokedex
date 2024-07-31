@@ -1,3 +1,5 @@
+package br.com.fekete1.mypokedex.viewmodel
+
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,8 +25,11 @@ class PokemonViewModel : ViewModel() {
         if (isLoading) return  // Não faça nada se já estiver carregando
 
         isLoading = true
+        pokemons.value = pokemons.value.orEmpty() + listOf(null) // Adiciona item de loading
+
         viewModelScope.launch {
             try {
+                Log.d("PokemonViewModel", "Loading more pokemons, offset: $offset")
                 val pokemonsApiResult: PokemonsApiResult? = withContext(Dispatchers.IO) {
                     PokemonRepository.listPokemons(limit, offset)
                 }
@@ -49,7 +54,7 @@ class PokemonViewModel : ViewModel() {
                 }
 
                 newPokemons?.let {
-                    val currentList = pokemons.value.orEmpty()
+                    val currentList = pokemons.value.orEmpty().filterNotNull() // Remove item de loading
                     pokemons.postValue(currentList + it)
                     offset += limit
                 }
