@@ -52,10 +52,12 @@ class PokemonAdapter : ListAdapter<Pokemon?, RecyclerView.ViewHolder>(PokemonDif
                 tvNumber.text = "Nº ${item.formattedNumber}"
                 tvName.text = item.formattedName
                 tvType1.text = item.types[0].name.capitalize()
+                tvType1.setBackgroundResource(item.types[0].color)
 
                 if (item.types.size > 1) {
                     tvType2.visibility = View.VISIBLE
                     tvType2.text = item.types[1].name.capitalize()
+                    tvType2.setBackgroundResource(item.types[1].color)
                 } else {
                     tvType2.visibility = View.GONE
                 }
