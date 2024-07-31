@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import br.com.fekete1.mypokedex.api.PokemonRepository
 import br.com.fekete1.mypokedex.domain.Pokemon
 import br.com.fekete1.mypokedex.api.model.PokemonsApiResult
+import br.com.fekete1.mypokedex.domain.PokemonType
+import br.com.fekete1.mypokedex.utils.getTypeColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,7 +54,10 @@ class PokemonViewModel : ViewModel() {
                             pokemonApiResult.id,
                             pokemonApiResult.name,
                             pokemonApiResult.types.map { type ->
-                                type.type
+                                PokemonType(
+                                    type.type.name,
+                                    getTypeColor(type.type.name)
+                                )
                             }
                         )
                     }
