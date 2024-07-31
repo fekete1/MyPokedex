@@ -1,6 +1,5 @@
 package br.com.fekete1.mypokedex.viewmodel
 
-import PokemonViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
