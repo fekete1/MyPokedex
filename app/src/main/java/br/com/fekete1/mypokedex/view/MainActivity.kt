@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         // Configurar o RecyclerView e Adapter
         recyclerView = findViewById(R.id.rvPokemons)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = PokemonAdapter()
+        adapter = PokemonAdapter() // Passando o contexto
         recyclerView.adapter = adapter
 
         // Configurar o ViewModel
