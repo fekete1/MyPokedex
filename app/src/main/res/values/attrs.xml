@@ -1,0 +1,9 @@
+<resources>
+    <!-- Define custom attributes -->
+    <declare-styleable name="CustomTheme">
+        <attr name="textPrimary" format="color"/>
+        <attr name="textSecondary" format="color"/>
+        <attr name="primaryBackground" format="color"/>
+        <attr name="secondaryBackground" format="color"/>
+    </declare-styleable>
+</resources>
