@@ -55,6 +55,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNumber"
+            android:textStyle="bold"
             tools:text="Salamence" />
 
         <LinearLayout
@@ -75,6 +76,7 @@
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 tools:text="Type"
                 />
 
@@ -88,6 +90,7 @@
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 tools:text="Fire"
                 />
         </LinearLayout>

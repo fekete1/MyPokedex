@@ -1,5 +1,6 @@
 package br.com.fekete1.mypokedex.view
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,19 @@ class PokemonAdapter : ListAdapter<Pokemon?, RecyclerView.ViewHolder>(PokemonDif
     }
 
     class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                val context = itemView.context
+                val item = itemView.tag as? Pokemon
+                item?.let {
+                    val intent = Intent(context, PokemonDetailsActivity::class.java).apply {
+                        putExtra("POKEMON_NUMBER", it.number)
+                    }
+                    context.startActivity(intent)
+                }
+            }
+        }
+
         fun bindView(item: Pokemon?) = with(itemView) {
             val ivPokemon = findViewById<ImageView>(R.id.ivPokemon)
             val tvNumber = findViewById<TextView>(R.id.tvNumber)
@@ -61,6 +75,9 @@ class PokemonAdapter : ListAdapter<Pokemon?, RecyclerView.ViewHolder>(PokemonDif
                 } else {
                     tvType2.visibility = View.GONE
                 }
+
+                // Associa o item ao itemView para acessá-lo no clique
+                itemView.tag = item
             }
         }
     }
@@ -75,6 +92,5 @@ class PokemonAdapter : ListAdapter<Pokemon?, RecyclerView.ViewHolder>(PokemonDif
         override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean {
             return oldItem == newItem
         }
-
     }
 }
