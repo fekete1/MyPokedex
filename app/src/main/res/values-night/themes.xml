@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme for Night Mode. -->
     <style name="Base.Theme.MyPokedex" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="textPrimary">#ffffff</item>
+        <item name="textSecondary">#ffffff</item>
+        <item name="primaryBackground">#ffffff</item>
+        <item name="secondaryBackground">#703dc6</item>
     </style>
 </resources>
